@@ -1,0 +1,42 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 I'm building a SQL portfolio project to help me get hired for entry-level technical support, customer service, and analyst roles. Project name: "Atlanta Falcons Play-by-Play Analytics Database." I'm a recent Georgia Tech CS grad. I'll be putting this on my resume and LinkedIn and discussing it in interviews, so I need to understand and be able to explain every query and design choice. Please teach as you go. Don't just hand me finished code.\
+\
+GOAL\
+Build a SQLite database from the last 5 NFL seasons (2021-2025) of play-by-play data from the nflverse project, then write 8-10 well-documented SQL queries that analyze team efficiency and play-calling, with a focus on the Atlanta Falcons. Publish it on GitHub (username: msmudano) with a README that shows the questions, the queries, and short plain-English findings.\
+\
+DATA\
+- Source: nflverse play-by-play data (github.com/nflverse/nflverse-data releases). Please check the current file names and format before downloading, and also grab the schedules/games and rosters files if they're useful. If network access is blocked, tell me what to download manually.\
+- Tools: Python (pandas) plus the sqlite3 module, or the sqlite3 CLI. Keep the setup simple and reproducible.\
+- Keep only the columns I need rather than loading every column. Explain which ones you chose and why.\
+\
+SKILLS THE QUERIES SHOULD DEMONSTRATE\
+Joins across multiple tables, CTEs, window functions (RANK, LAG, rolling averages), CASE WHEN bucketing, GROUP BY with HAVING, and filtering out non-plays (timeouts, kickoffs, etc.) correctly.\
+\
+QUERIES TO BUILD (adjust if the data suggests better ones)\
+1. Success rate by down and distance, Falcons vs. the league\
+2. Run vs. pass rate by game situation (score margin, quarter)\
+3. Third-down conversion rate by distance bucket\
+4. Red-zone efficiency ranked across all 32 teams\
+5. Rolling 4-game average of points scored by the Falcons\
+6. Top rushers and receivers by EPA per play, with a minimum-plays filter\
+7. Home vs. away splits\
+Plus 1-3 more of your suggestion.\
+\
+HOW I WANT TO WORK\
+- Work in small steps. For this first session, stop after: project setup, data loaded, a clear schema, and the first 2-3 queries working. Then summarize where we are.\
+- Before each query, explain the question and your approach in plain English, then show the SQL with comments.\
+- Ask me before making any major design decision (schema layout, what counts as a "play," how to define success rate), and explain the tradeoffs.\
+- Validate results with sanity checks (e.g., compare a Falcons total against a known figure) and tell me if anything looks wrong.\
+- Never invent numbers. Print and record the real row count and season count, because I'll put them on my resume.\
+- Commit to git often with clear messages. Structure the repo with data/ (gitignored if large), sql/ (one file per query), a loader script, and README.md.\
+\
+README REQUIREMENTS\
+Project overview, how to reproduce it, the schema, each question with its query and a 2-3 sentence finding in plain English, and an honest note on how I built it (I used Claude Code as an assistant; I designed the questions and own the analysis).\
+\
+Start by checking the current nflverse data files and proposing the project structure and schema. Don't write queries yet.}
