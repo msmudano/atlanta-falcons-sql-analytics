@@ -52,6 +52,7 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 | 1 | Success rate by down and distance, Falcons vs. the league | [`01`](sql/01_success_rate_by_down_distance.sql) | Essentially league average (47.8% vs. 47.6%): slightly better on every 2nd-down distance, slightly worse on most 3rd and 4th downs. |
 | 2 | Run vs. pass rate by score margin and quarter | [`02`](sql/02_pass_rate_by_score_and_quarter.sql) | Passed less than the league in every score situation (55.9% vs. 60.7%); the 2022 team had the league's lowest pass rate (48.7%). |
 | 3 | Third-down conversion rate by distance, ranked | [`03`](sql/03_third_down_conversion_by_distance.sql) | 15th of 32 overall (39.0%), but 28th of 32 on 3rd & 1. |
+| 4 | Red-zone touchdown rate per trip, all 32 teams ranked | [`04`](sql/04_red_zone_td_rate_ranked.sql) | 22nd of 32 (55.2% of 259 trips vs. a 56.4% team average); fell to 28th in 2023, then rose to 11th–12th in 2024–25. |
 
 *More queries in progress.*
 
