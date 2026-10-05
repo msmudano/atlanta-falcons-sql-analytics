@@ -54,6 +54,7 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 | 3 | Third-down conversion rate by distance, ranked | [`03`](sql/03_third_down_conversion_by_distance.sql) | 15th of 32 overall (39.0%), but 28th of 32 on 3rd & 1. |
 | 4 | Red-zone touchdown rate per trip, all 32 teams ranked | [`04`](sql/04_red_zone_td_rate_ranked.sql) | 22nd of 32 (55.2% of 259 trips vs. a 56.4% team average); fell to 28th in 2023, then rose to 11th–12th in 2024–25. |
 | 5 | Rolling 4-game average of Falcons points, with offensive EPA/play | [`05`](sql/05_rolling_points_and_epa.sql) | Points and EPA/play move together (r = 0.80 per game). In 2024 the rolling average fell from 29.8 (Week 8) to 13.8 (Week 15, Kirk Cousins' last start), then recovered to 27.8 over Michael Penix Jr.'s three starts. |
+| 6 | Top rushers and receivers by EPA per play (100+ carries / 50+ targets), ranked within position | [`06`](sql/06_top_players_epa_per_play.sql) | Bijan Robinson and Tyler Allgeier were equally efficient runners (66th percentile of 149 RBs). Drake London produced the most total receiving value (84.9 EPA) but ranked in the 38th percentile per target among WRs. |
 
 *More queries in progress.*
 
