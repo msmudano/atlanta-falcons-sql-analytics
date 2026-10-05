@@ -56,8 +56,9 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 | 5 | Rolling 4-game average of Falcons points, with offensive EPA/play | [`05`](sql/05_rolling_points_and_epa.sql) | Points and EPA/play move together (r = 0.80 per game). In 2024 the rolling average fell from 29.8 (Week 8) to 13.8 (Week 15, Kirk Cousins' last start), then recovered to 27.8 over Michael Penix Jr.'s three starts. |
 | 6 | Top rushers and receivers by EPA per play (100+ carries / 50+ targets), ranked within position | [`06`](sql/06_top_players_epa_per_play.sql) | Bijan Robinson and Tyler Allgeier were equally efficient runners (66th percentile of 149 RBs). Drake London produced the most total receiving value (84.9 EPA) but ranked in the 38th percentile per target among WRs. |
 | 7 | Home vs. away splits, compared with the league's home-field edge | [`07`](sql/07_home_away_splits.sql) | 20–21 at home vs. 16–25 away (+9.8 win-% points), close to the league's +7.8. The Falcons' offense gained more at home than usual (+3.1 success-rate points vs. +1.0), but they allowed only 0.9 fewer points per game at home vs. the league's 2.1. Three neutral-site games (London ×2, Berlin) are excluded. |
-
-*More queries in progress.*
+| 8 | Early-down pass rate in neutral situations, ranked by season | [`08`](sql/08_neutral_early_down_pass_rate.sql) | The run-heavy approach was a choice, not game situation: in 2022 the Falcons had the NFL's lowest neutral early-down pass rate (40.7%, 32nd of 32). Under Raheem Morris the gap to the league narrowed to about 3.5 points, still 26th–27th. |
+| 9 | How drives ended, with ATL's rank for each outcome | [`09`](sql/09_drive_outcomes.sql) | 19.8% of Falcons drives ended in a touchdown vs. a 22.8% team average (24th); they ranked 5th-most in turnovers, 7th in field goals and 3rd in missed field goals. |
+| 10 | Arthur Smith era (2021–23) vs. Raheem Morris era (2024–25), each vs. the league over the same seasons | [`10`](sql/10_smith_vs_morris_eras.sql) | Offensive efficiency rose from 27th to 17th in EPA/play and from 24th to 12th in red-zone TD rate, and the defense from 30th to 22nd; but 3rd-down conversion fell from 11th to 26th, and points-per-game rank stayed 24th. |
 
 ## How I built this
 
