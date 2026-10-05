@@ -31,7 +31,7 @@ download fails with an SSL certificate error.
 
 | Object | One row per | Key |
 |---|---|---|
-| `games` | game | `game_id` |
+| `games` | game (with `location` = Home/Neutral for international games) | `game_id` |
 | `plays` | play-by-play event (including timeouts, kickoffs, penalties) | `(game_id, play_id)` |
 | `players` | player | `player_id` (NFL GSIS id) |
 | `scrimmage_plays` (view) | real pass/run play | — |
@@ -55,6 +55,7 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 | 4 | Red-zone touchdown rate per trip, all 32 teams ranked | [`04`](sql/04_red_zone_td_rate_ranked.sql) | 22nd of 32 (55.2% of 259 trips vs. a 56.4% team average); fell to 28th in 2023, then rose to 11th–12th in 2024–25. |
 | 5 | Rolling 4-game average of Falcons points, with offensive EPA/play | [`05`](sql/05_rolling_points_and_epa.sql) | Points and EPA/play move together (r = 0.80 per game). In 2024 the rolling average fell from 29.8 (Week 8) to 13.8 (Week 15, Kirk Cousins' last start), then recovered to 27.8 over Michael Penix Jr.'s three starts. |
 | 6 | Top rushers and receivers by EPA per play (100+ carries / 50+ targets), ranked within position | [`06`](sql/06_top_players_epa_per_play.sql) | Bijan Robinson and Tyler Allgeier were equally efficient runners (66th percentile of 149 RBs). Drake London produced the most total receiving value (84.9 EPA) but ranked in the 38th percentile per target among WRs. |
+| 7 | Home vs. away splits, compared with the league's home-field edge | [`07`](sql/07_home_away_splits.sql) | 20–21 at home vs. 16–25 away (+9.8 win-% points), close to the league's +7.8. The Falcons' offense gained more at home than usual (+3.1 success-rate points vs. +1.0), but they allowed only 0.9 fewer points per game at home vs. the league's 2.1. Three neutral-site games (London ×2, Berlin) are excluded. |
 
 *More queries in progress.*
 
