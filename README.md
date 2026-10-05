@@ -15,17 +15,47 @@ Atlanta Falcons.
 
 **Stack:** Python (pandas) to download and load, SQLite for storage and queries.
 
+**SQL techniques used:** multi-table joins, CTEs, window functions (`RANK`,
+`PERCENT_RANK`, `LAG`, rolling averages with `ROWS BETWEEN`), `CASE WHEN`
+bucketing, `GROUP BY` with `HAVING`, pivots and unpivots, `CROSS JOIN` grids,
+and a view that defines what counts as a play.
+
+## Repository layout
+
+```
+load_data.py      downloads nflverse files, keeps 35 of 372 columns, builds the database
+requirements.txt  pandas
+sql/00_schema.sql tables, keys, indexes, and the scrimmage_plays view
+sql/01-10_*.sql   one file per question, each with a header explaining its definitions
+prompt.rtf        the original prompt given to Claude Code (see "How I built this")
+data/             created by the loader; gitignored
+```
+
 ## How to reproduce
+
+Requires Python 3 and the `sqlite3` command-line tool (tested with Python 3.12
+and SQLite 3.45).
 
 ```bash
 pip install -r requirements.txt
-python load_data.py          # downloads to data/raw/, builds data/falcons.db
+python load_data.py          # downloads ~100 MB to data/raw/, builds data/falcons.db
 sqlite3 -header -column data/falcons.db < sql/01_success_rate_by_down_distance.sql
+
+# or run every query:
+for f in sql/0[1-9]_*.sql sql/1[0-9]_*.sql; do echo "== $f"; sqlite3 -header -column data/falcons.db < "$f"; done
 ```
 
-`data/` is gitignored; the loader rebuilds it from the nflverse releases.
-On macOS with python.org Python, run `Install Certificates.command` once if the
-download fails with an SSL certificate error.
+`data/` is gitignored; the loader rebuilds it from the nflverse releases. If the
+download fails with an SSL certificate error (common with python.org Python on
+macOS), either run `Install Certificates.command` from your Python folder once,
+or point Python at certifi's bundle (`pip install certifi` if needed):
+
+```bash
+SSL_CERT_FILE=$(python -c "import certifi; print(certifi.where())") python load_data.py
+```
+
+The data in this README was downloaded on October 5, 2026. nflverse
+occasionally revises past seasons, so a later download may differ slightly.
 
 ## Schema
 
@@ -45,6 +75,30 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 - **Success:** gain at least 40% of the yards to go on 1st down, 60% on 2nd,
   100% on 3rd/4th. A turnover is never a success.
 
+## Data validation
+
+Before analyzing anything, I checked that the data loaded correctly:
+
+| Check | Result |
+|---|---|
+| Games per season | 272 each season, except 271 in 2022 (the cancelled Bills–Bengals game); Falcons 17 every season |
+| Final play-by-play score vs. schedule score | Match for all 1,359 games |
+| Plays with no matching game | 0 |
+| Player IDs in plays with no matching player | 0 |
+| NULL down / offense / EPA / yards on scrimmage plays | 0 (two-point tries correctly excluded) |
+| Falcons points scored and allowed, 2025 | 353 / 401, matching an outside source |
+
+Each query also has its own checks, such as buckets adding back up to totals,
+or join row counts matching the number of games, so no rows were lost or duplicated.
+
+Two data issues found and handled:
+
+- nflverse labels QB scrambles `play_type = 'run'` but flags them as dropbacks.
+  Pass rates use the dropback flag, so scrambles count as the pass calls they were.
+- The 2025 Falcons–Colts game is flagged as a neutral-site game, but its stadium
+  field says Indianapolis. An outside source confirmed it was played in Berlin,
+  so the `location` flag is used and the stadium field is not.
+
 ## Questions and findings
 
 | # | Question | Query | Finding |
@@ -59,6 +113,25 @@ Full definitions with comments: [`sql/00_schema.sql`](sql/00_schema.sql).
 | 8 | Early-down pass rate in neutral situations, ranked by season | [`08`](sql/08_neutral_early_down_pass_rate.sql) | The run-heavy approach was a choice, not game situation: in 2022 the Falcons had the NFL's lowest neutral early-down pass rate (40.7%, 32nd of 32). Under Raheem Morris the gap to the league narrowed to about 3.5 points, still 26th–27th. |
 | 9 | How drives ended, with ATL's rank for each outcome | [`09`](sql/09_drive_outcomes.sql) | 19.8% of Falcons drives ended in a touchdown vs. a 22.8% team average (24th); they ranked 5th-most in turnovers, 7th in field goals and 3rd in missed field goals. |
 | 10 | Arthur Smith era (2021–23) vs. Raheem Morris era (2024–25), each vs. the league over the same seasons | [`10`](sql/10_smith_vs_morris_eras.sql) | Offensive efficiency rose from 27th to 17th in EPA/play and from 24th to 12th in red-zone TD rate, and the defense from 30th to 22nd; but 3rd-down conversion fell from 11th to 26th, and points-per-game rank stayed 24th. |
+
+## Limitations
+
+- **Small samples.** One team over five seasons is 85 games, about 50 red-zone
+  trips a season, and 41 games per home/away venue. Small rank differences
+  (11th vs. 14th) are within noise; the findings above focus on large gaps.
+- **Eras are not just coaches.** The Falcons' starting quarterback changed almost
+  every season (Matt Ryan; Marcus Mariota and Desmond Ridder; Ridder and Taylor
+  Heinicke; Kirk Cousins; Michael Penix Jr.), along with coordinators and roster.
+  Query 10 compares eras; it does not isolate the head coach's effect.
+- **EPA is a model.** EPA comes from nflverse's expected-points model. Success
+  rate is defined by yardage instead, so the headline efficiency metric doesn't
+  depend on a model.
+- **Shared credit.** A receiver's EPA per target also reflects the quarterback
+  and play design.
+- **Positions** are each player's most recent roster listing, so a player who
+  changed positions is grouped by the later one.
+- **Correlation** in Query 5 (r = 0.80) was computed in Python, because SQLite
+  has no `CORR()` function.
 
 ## How I built this
 
