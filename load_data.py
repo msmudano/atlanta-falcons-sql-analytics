@@ -39,7 +39,7 @@ PBP_COLUMNS = [
 
 GAME_COLUMNS = [
     "game_id", "season", "week", "game_type", "gameday", "home_team", "away_team",
-    "home_score", "away_score", "overtime", "div_game", "roof",
+    "home_score", "away_score", "overtime", "div_game", "roof", "location",
 ]
 
 # pbp stores 0/1 flags as floats (1.0, 0.0, NaN); store them as whole numbers.

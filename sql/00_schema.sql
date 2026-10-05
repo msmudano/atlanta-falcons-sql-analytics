@@ -30,7 +30,9 @@ CREATE TABLE games (
     away_score   INTEGER,
     overtime     INTEGER,            -- 1 if the game went to OT
     div_game     INTEGER,            -- 1 if a division matchup
-    roof         TEXT                -- 'outdoors', 'dome', 'closed', 'open'
+    roof         TEXT,               -- 'outdoors', 'dome', 'closed', 'open'
+    location     TEXT                -- 'Home' or 'Neutral' (London, Germany, etc.).
+                                     -- For 'Neutral', home_team is only the designated home side.
 );
 
 -- ---------------------------------------------------------------------
